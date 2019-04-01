@@ -1,0 +1,29 @@
+<div id="header" class="panel-menu-bar">
+    <a target="_blank" class="navbar-brand " n:href=":Front:Default:">
+        <span class="title-brand">{$neon->title_admin}</span>
+    </a>
+
+
+    <div class="panel-menu-bar-right">
+        <div class="dropdown">
+            <a href="#" id="userMenuLabel" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false">
+                    <span class="panel-menu-bar-avatar">
+                        <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                    </span>
+                    <span class="hide-xxs">admin@test.cz</span>
+                <span class="glyphicon glyphicon-menu-down offset-left" aria-hidden="true"></span>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="userMenuLabel">
+                <li>
+                    <a n:href="Users:mySettings"><span class="glyphicon glyphicon-cog offset-right" aria-hidden="true"></span> Moje nastavení</a>
+                </li>
+                <li>
+                    <a n:href=":Admin:Sign:out"><span class="glyphicon glyphicon-off offset-right" aria-hidden="true"></span> Odhlásit</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+</div>
+
+

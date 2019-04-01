@@ -1,0 +1,5 @@
+# GitIgnore for Web
+# Project Settings and MetaData
+web/log
+web/session
+web/temp

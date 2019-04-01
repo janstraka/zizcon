@@ -1,0 +1,44 @@
+{control customerForm}
+{*
+<form n:name="customerForm" class="form-preview">
+    <ul class="error" n:if="$form->errors">
+        <li n:foreach="$form->errors as $error">{$error}</li>
+    </ul>
+
+
+    <div>
+        <div>
+            <label n:name="username">Username</label></div>
+        <div>
+            <input n:name="username">
+        </div>
+    </div>
+    <div>
+        <div>
+            <label n:name="email">Email</label></div>
+        <div>
+            <input n:name="email">
+        </div>
+    </div>
+    <div>
+        <div>
+            <label n:name="password">Password</label></div>
+        <div>
+            <input n:name="password">
+        </div>
+    </div>
+
+    <div class="form-add-custommer-wrapper-checkbox">
+
+        <input type="checkbox" n:name="newsletter">
+        <label  n:name="newsletter">Newsletter</label>
+    </div>
+
+    <div>
+        <input class="button-submit-preview" type="submit" value="save" n:name="save">
+    </div>
+
+
+    </form>
+
+*}

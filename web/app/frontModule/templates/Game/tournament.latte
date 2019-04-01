@@ -1,0 +1,52 @@
+{block content}
+
+    <div class="container">
+        <div class="row">
+            <div id="content" class="col-sm-12 skel-cell-important">
+                <section>
+
+
+                    <div class="row">
+                        <div class="col-sm-8 col-sm-offset-2 text-justify">
+                            <p><b>Program ročníku 2018 je právě v přípravě.</b> Nové aktivity přibývají každý den</p>
+                        </div>
+                    </div>
+
+                    <header>
+                        <h2>Hraj a vyhraj! (Play-and-win)</h2>
+                    </header>
+                    <div class="row">
+                        <div class="col-sm-8 col-sm-offset-2 text-justify">
+                            <p><b>Play-and-win</b> je koncept, který jsme si vypůjčili od kolegů z populárního amerického conu Geekway to the West. 
+                                         Princip spočívá v tom, že v deskoherně budou hry označené štítkem Hraj a vyhraj - Žižcon 2018, které si můžete volně vypůjčit a zahrát. 
+                                         Pokud budete chtít, můžeme vám samozřejmě vysvětlit pravidla. V každé krabici najdete lístečky s názvem hry a do jednoho z nich zapíšete 
+                                         čísla na pásce (vstupence) každého hráče a případně člověka, který vám hru vysvětlil. V sobotu večer pak vylosujeme jeden lísteček 
+                                         pro každou hru a z něho určíme vítěze hodem kostkou - ten si bude moci hru odnést domů. Čím více deskovek si u nás zahrajete, 
+                                         tím větší šanci budete mít, že vám některá z nich zůstane. Pokud náhodou hru již máte nebo vás nezaujme, můžete místo čísla 
+                                         napsat chytlavé heslo „Čus Hus!“ (nebo políčko prostě proškrtnout) – pokud vylosujeme výherce, který tak udělal, hru podle jejího typu 
+                                         a náročnosti buď věnujeme místním nízkoprahovým klubům Husita a Husátko, nebo z ní uděláme součást naší deskoherní knihovny, 
+                                         která pro vás bude dostupná na každém dalším ŽižConu, stejně jako na našich více i méně pravidelných deskoherních akcích. 
+                                         Pokud vás tento koncept zaujal a chcete se dozvědět víc, můžete se podívat na <a href="https://docs.google.com/document/d/1MAdKf5_Niifq-kThqNfXImDmo9E1dPE1gMUQlq_D_GU/edit?usp=sharing" target="_blank">DOKUMENT</a>, 
+                                         který bude sekci popisovat přímo na místě. Také můžeme doporučit <a href="https://stonemaiergames.com/an-open-letter-to-small-game-conventions-from-a-tiny-publishing-company/" target="_blank">BLOG</a> Stonemaier Games 
+                                         nebo popis sekce na výše zmiňovaném conu <a href="https://geekwaytothewest.com/home/events/play-and-win/" target="_blank">Geekway</a>. 
+                                         Hry do této sekce věnovaly firmy Mindok, Blackfire, Albi a Rexhry, za což jsme jim velmi vděční. V rámci Hraj a vyhraj na ŽižConu bude dostupné: 
+                                         Gobbit, Šťastný candát, Lords of Hellas, Ostrov Skye, Puerto Rico, Kanagawa, Lorenzo il magnifico, Yogi, Costa Rica, Cacao, Cortex 2, Veverčáci, 
+                                         Ďábelský profesor a Citadela času, Monstra vs. Hrdinové, Dice Forge, Munchkin: Apokalypsa, Medvěd WRR, Fallout, Fantastic park, Ovce: Boj o pastviny, 
+                                         Meeple Circus, Ethnos, Settlers, Vládce Tokia, Nejsme tu sami, Honba za prstenem, Bloodrage, Lotos a další!
+                             </p>
+                        </div>
+                    </div>
+
+                    <br>
+                    <header>
+                        <h2>{$title}</h2>
+                    </header>
+                    {foreach $games as $game}
+                        {control game, $game}
+                    {/foreach}
+
+                </section>
+            </div>
+        </div>
+    </div>
+{/block}

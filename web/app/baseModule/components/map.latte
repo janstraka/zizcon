@@ -1,0 +1,6 @@
+<div class="info-circle">
+
+    <span class="circle-date">{$event_detail->date|date:'j. n.'} od {$event_detail->date|date:'H:i'}</span>
+    <span n:if="$event_detail->date2"   class="circle-date circle-date2">{$event_detail->date2|date:'j. n.'} od {$event_detail->date2|date:'H:i'}</span>
+</div>
+<div id="map-canvas"></div>

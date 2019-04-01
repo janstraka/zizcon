@@ -1,0 +1,29 @@
+{block content}
+<div id="email_actions_buttons" style="float: right;">
+    <ul style="list-style: none;">
+    {*
+        <li><a n:href="sendNewsletter!" class="button confirm">{$word->send_newsletter}</a></li>
+    *}
+        <li><a n:href="edit" class="button" xmlns:n="http://www.w3.org/1999/xhtml">{$word->add_new}</a></li>
+    </ul>
+</div>
+
+<h1 n:block="title">Emaily</h1>
+
+<table>
+    <thead>
+        <tr>
+            <th>{$word->email}</th>
+            <th class="actions">{$word->actions}</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr n:foreach="$emails as $email">
+            <td data-label="Email">{$email->email}</td>
+            <td data-label="Akce" >
+                <a title="Upravit" n:href="edit, $email->id" class="button"><i class="fa fa-pencil"></i></a>
+                <a title="Odstranit" n:href="delete!, $email->id" class="confirm button"><i class="fa fa-trash-o"></i></a>
+            </td>
+        </tr>
+    </tbody>
+</table>
