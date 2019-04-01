@@ -1,0 +1,20 @@
+{**
+* @param string   $basePath web base path
+* @param array    $flashes  flash messages
+* @param array    $neon parameters from config.neon
+*}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>{ifset title}{include title|striptags} | {/ifset}{$neon->title_admin}</title>
+    <link rel="stylesheet" href="{$basePath}/css/adminModule/style.css">
+    <link rel="icon" type="image/png" href="{$basePath}/images/favicons/favicon-16x16.ico" sizes="16x16">
+
+    {block #head}{/block}
+</head>
+<body onload="this.print()">
+    {include #content}
+</body>
+</html>

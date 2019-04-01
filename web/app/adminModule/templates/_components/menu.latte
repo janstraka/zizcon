@@ -1,0 +1,40 @@
+
+<div id="sidebar-menu" class="{ifCurrent Sign:in}hidden{/ifCurrent}">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+    </div>
+    <div class="navbar-collapse collapse sidebar-navbar-collapse">
+        <ul n:if="$user->isInRole('admin')" class="nav navbar-nav" id="sidenav01">
+
+            <li><a n:class="$presenter->isLinkCurrent() ? active" n:href="Users:"><span
+                            class="glyphicon glyphicon-user"></span><span class="nav-text">Uživatelé</span></a>
+            </li>
+            <li><a n:class="$presenter->isLinkCurrent() ? active" n:href="Notices:">
+                    <span class="glyphicon glyphicon-text-size"></span><span class="nav-text">Aktuality</span>
+                </a>
+            </li>
+            <li><a n:class="$presenter->isLinkCurrent() ? active" n:href="Reservations:">
+                    <span class="glyphicon glyphicon-text-size"></span><span class="nav-text">Rezervace</span>
+                </a>
+            </li>
+
+            <li n:class="$presenter->isLinkCurrent() ? active" n:if="$is_dev_server">
+                <a target="_blank" n:href=":Base:Utils:, hash => BaseModule\Presenters\UtilsPresenter::HASH">
+                    <span class="glyphicon glyphicon-cog"></span><span class="nav-text"> Utils</span></a>
+            </li>
+        </ul>
+    </div><!--/.nav-collapse -->
+
+    <span class="btn-sidebar-hidden pull-right hidden-xs"><span class="glyphicon glyphicon-menu-left"></span></span>
+
+
+</div>
+
+
+
+

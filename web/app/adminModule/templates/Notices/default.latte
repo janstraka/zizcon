@@ -1,0 +1,38 @@
+{block content}
+<h1 n:block="title">Aktuality</h1>
+<div class="col-md-12 top">
+    <a n:href="edit" class="button">Přidat aktualitu</a>
+</div>
+
+<div class="col-md-12">
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Obsah</th>
+            <th class="column-hide">Datum přidání</th>
+            <th>Akce</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr n:foreach="$notices as $notice">
+            <td data-title="Obsah">
+                {$notice->content}
+            </td>
+
+            <td class="column-hide" data-title="Datum přidání">{$notice->date|date:'%d.%m.%Y'}</td>
+
+            <td ddata-title="Akce">
+                <a title="Upravit" n:href="edit, $notice->id" class="button"><i class="fa fa-pencil"></i></a>
+                <a title="Odstranit" n:href="delete!, $notice->id" class="confirm button"><i class="fa fa-trash-o"></i></a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+
+<!-- begin snippet: js hide: false -->
+
+<!-- language: lang-css -->
+

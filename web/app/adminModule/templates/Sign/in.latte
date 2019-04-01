@@ -1,0 +1,29 @@
+{block content}
+
+
+<h1 class="tag" n:block="title">Přihlásit se do administrace</h1>
+
+{if $user->isLoggedIn() && $user->isInRole('admin')}
+    Již jste přihlášen
+{else}
+    <div class="col-md-6 col-md-offset-3 vertical-center">
+        {control signInForm}
+
+        {if $is_dev_server}
+            <center>
+                <a id="sign-in-admin" class="button btn-block" href="#">Přihlásit se jako administrátor (pouze pro testing)</a>
+            </center>
+        {/if}
+    </div>
+
+    {define #scripts}{include #parent}
+        <script>
+            $('#sign-in-admin').click(function () {
+                $('[name="email"]').val('admin@test.cz');
+                $('[name="password"]').val('test');
+                $('[name="remember"]').prop('checked', true);
+                $('[type="submit"]').click();
+            });
+        </script>
+    {/define}
+{/if}

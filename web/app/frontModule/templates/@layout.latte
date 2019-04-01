@@ -1,0 +1,208 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>{ifset title}{include title|striptags} | {/ifset}{$neon->title}{ifset $title} - {$title}{/ifset}</title>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <meta name="description" content=""/>
+    <meta name="keywords" content=""/>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <!--[if lte IE 8]>
+    <script src="js/html5shiv.js"></script><![endif]-->
+    <link rel="stylesheet" href="{$basePath}/css/bootstrap.css"/>
+    <link rel="stylesheet" href="{$basePath}/css/style-mobile.css"/>
+    <link rel="stylesheet" href="{$basePath}/css/skel-noscript.css"/>
+    <link rel="stylesheet" href="{$basePath}/css/style.css"/>
+    <link rel="stylesheet" href="{$basePath}/css/style-desktop.css"/>
+    <link rel="stylesheet" href="{$basePath}/css/style-1000px.css"/>
+</head>
+<body class="homepage">
+<!-- Header -->
+<div id="header">
+    <div class="container">
+        <!-- Logo -->
+        <div id="logo">
+            <h1><a n:href="About:default">v roce 2019 na Žižkově</a></h1>
+        </div>
+    </div>
+    <div id="nav-wrapper" class="container">
+        <!-- Nav -->
+        <nav id="nav">
+            <ul>
+                <li><a n:href="About:default">O nás</a></li>
+                <li><a n:href="Program:default">Program</a></li>
+                <li><a n:href="Location:default">KDE</a></li>
+                <li><a n:href="Tickets:default">Lístky</a></li>
+                <li><a n:href="Rules:default">Pravidla účasti</a></li>
+            </ul>
+        </nav>
+    </div>
+    <div class="container">
+        <div id="banner"><a n:href="About:" class="image featured"><img src="{$basePath}/images/logo.png" alt=""></a>
+        </div>
+    </div>
+</div>
+<!-- Header -->
+
+<!-- Main -->
+<div id="main">
+    {foreach $flashes as $flash}
+        <div class="flash {$flash->type}">{$flash->message}</div>
+    {/foreach}
+
+    {block content}{/block}
+</div>
+<!-- /Main -->
+
+<!-- Footer -->
+<div id="footer">
+    {include 'footer.latte'}
+</div>
+<!-- /Footer -->
+<div id="partner-footer">
+    <div class="row text-center" id="partners">
+        <div class="col-sm-12">
+            <h2 class="partners-title">Hlavní partneři</h2>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row text-center">
+            <div class="col-sm-3">
+                <a href="http://www.albi.cz/" target="_blank"><img src="{$basePath}/images/sponsors/albi_logo.jpg" width="70%"></a>
+            </div>
+            <div class="col-sm-3">
+                </br>
+                <a href="http://eshop.blackfire.cz/" target="_blank"><img src="{$basePath}/images/sponsors/BF_logo.jpg" width="70%"></a>
+            </div>
+            <div class="col-sm-3">
+                </br>
+                </br>
+                <a href="http://www.mindok.cz/cz/uvodni-strana" target="_blank"><img src="{$basePath}/images/sponsors/mindoks.png" width="70%"></a>
+            </div>
+            <div class="col-sm-3">
+                <a href="http://www.rexhry.cz/" target="_blank"><img src="{$basePath}/images/sponsors/rexHry.png" width="50%"></a>
+            </div>
+        </div>
+
+        <div class="row text-center">
+            <div class="col-sm-4">
+                </br>
+                <img src="{$basePath}/images/sponsors/komunitniCentrumZizkov.jpg" width="70%">
+            </div>
+            <div class="col-sm-4">
+                <a href="http://www.ujak.cz/" target="_blank"><img src="{$basePath}/images/sponsors/ujak.jpg" width="50%"></a>
+            </div>
+            <div class="col-sm-4">
+                <a href="https://www.nova-trojka.cz/" target="_blank"><img src="{$basePath}/images/sponsors/novaTrojka.png" width="80%"></a>
+            </div>
+        </div>
+
+        <div class="row text-center" id="partners">
+            <div class="col-sm-12">
+                <h3 class="partners-title">Vedlejší partneři</h3>
+            </div>
+        </div>
+        <div class="row text-center">
+            <div class="col-sm-2">
+                <a href="http://criticalhit.cz/" target="_blank"><img src="{$basePath}/images/sponsors/critical_hit.jpg" width="70%"></a>
+            </div>
+            <div class="col-sm-2">
+                <a href="http://gamecon.cz/" target="_blank"><img src="{$basePath}/images/sponsors/logoGC.png" width="70%"></a>
+            </div>
+            <div class="col-sm-2">
+                <a href="https://www.facebook.com/DrawblackGames/?fref=ts" target="_blank"><img src="{$basePath}/images/sponsors/gfss_logo.png" width="70%"></a>
+            </div>
+            <div class="col-sm-2">
+                <a href="http://hrajeme.cz/" target="_blank"><img src="{$basePath}/images/sponsors/hrajeme_cz.jpg" width="70%"></a>
+            </div>
+            <div class="col-sm-2">
+                <a href="http://hopestudio.cz/" target="_blank"><img src="{$basePath}/images/sponsors/hopehope.jpg" width="70%"></a>
+            </div>
+            <div class="col-sm-2">
+                <a href="http://www.lorisgames.cz/cs/" target="_blank"><img src="{$basePath}/images/sponsors/LorisGames_logo.jpg" width="70%"></a>
+            </div>
+        </div>
+
+        <div class="row text-center">
+
+            <div class="col-sm-2">
+                <a href="https://pivovarkunratice.cz/" target="_blank"><img src="{$basePath}/images/sponsors/muflon.png" width="70%"></a>
+            </div>
+            <div class="col-sm-2">
+                <a href="https://www.mephit.cz/" target="_blank"><img src="{$basePath}/images/sponsors/mephit.png" width="70%"></a>
+            </div>
+            <div class="col-sm-2">
+                <a href="http://www.pevnost.cz/" target="_blank"><img src="{$basePath}/images/sponsors/pevnost.jpg" width="70%"></a>
+            </div>
+            <div class="col-sm-2">
+                <a href="http://www.republikazizkov.cz/" target="_blank"><img src="{$basePath}/images/sponsors/republikaZizkov.png" width="70%"></a>
+            </div>
+            <div class="col-sm-2">
+                <a href="http://hrajlarp.cz/" target="_blank"><img src="{$basePath}/images/sponsors/hrajlarp_logo.png" width="70%"></a>
+            </div>
+            <div class="col-sm-2">
+                <a href="https://www.zatrolene-hry.cz/" target="_blank"><img src="{$basePath}/images/sponsors/troll.jpg" width="70%"></a>
+            </div>
+
+        </div>
+
+        <div class="row text-center">
+
+            <div class="col-sm-2">
+                <a href="http://www.foxinthebox.cz/index.html" target="_blank"><img src="{$basePath}/images/sponsors/fox_in_box.png" width="70%"></a>
+            </div>
+
+            <div class="col-sm-2">
+                <a href="http://incolor.cz" target="_blank"><img src="{$basePath}/images/sponsors/in_color-logo.png" width="70%"></a>
+            </div>
+
+            <div class="col-sm-4">
+                </br>
+                </br>
+                <img src="{$basePath}/images/sponsors/euPraha.jpg" width="70%">
+            </div>
+
+            <div class="col-sm-2">
+                <a href="http://www.praha3.cz/" target="_blank"><img src="{$basePath}/images/sponsors/praha3.jpg" width="70%"></a>
+            </div>
+
+            <div class="col-sm-2">
+                <a href="https://www.facebook.com/gwintCZ/" target="_blank"><img src="{$basePath}/images/sponsors/gwint.png" width="70%"></a>
+            </div>
+
+        </div>
+
+{*
+        <div class="row text-center">
+
+            <div class="col-sm-12">
+                <img src="{$basePath}/images/sponsors/euPraha.jpg" width="70%">
+            </div>
+
+        </div>
+*}
+
+
+    </div>
+
+    <!-- Copyright -->
+    <div id="copyright">
+        <div class="container">
+            {include 'copyright.latte'}
+        </div>
+    </div>
+</div>
+
+{block scripts}
+    <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+    <script src="https://nette.github.io/resources/js/netteForms.min.js"></script>
+    <script src="{$basePath}/js/main.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="{$basePath}/js/skel.min.js"></script>
+    <script src="{$basePath}/js/skel-panels.min.js"></script>
+    <script src="{$basePath}/js/init.js"></script>
+    <script src="{$basePath}/js/frontModule/reservation_form.js"></script>
+    <script src="{$basePath}/js/frontModule/scripts.js"></script>
+
+{/block}
+</body>
+</html>

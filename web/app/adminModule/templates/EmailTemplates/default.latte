@@ -1,0 +1,24 @@
+{block content}
+{* fiksme pridavani novych sablon vypnuto
+<a n:href="add" class="button" style="float: right;">přidat</a>
+*}
+<h1 n:block="title">{$word->email_templates}</h1>
+
+<table>
+    <thead>
+    <tr>
+        <th>Název</th>
+        <th class="actions">{$neon->actions->title}</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr n:foreach="$email_templates as $email_template">
+        <td>{$email_template->title}</td>
+        <td >
+            <a title="Upravit" n:href="edit, $email_template->id" class="button"><i class="fa fa-pencil"></i></a>
+            <a title="Odstranit" n:href="delete!, $email_template->id" class="confirm button"><i class="fa fa-trash-o"></i></a>
+        </td>
+    </tr>
+    </tbody>
+</table>

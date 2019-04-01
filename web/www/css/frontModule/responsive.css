@@ -1,0 +1,55 @@
+@media (max-width: 992px) {
+
+    .info-circle {
+        left: 4%;
+    }
+
+    .cite-author {
+        right: 0;
+        bottom: 0;
+    }
+}
+
+@media (max-width: 768px) {
+
+    .social {
+        border: none;
+        padding-right: 5px;
+    }
+
+    .logo {
+        right: 27px;
+        left: inherit;
+    }
+
+    .header-title {
+        font-size: 17px;
+        left: 27px;
+    }
+
+    .info-circle {
+        border-radius: 0;
+        top: 0;
+        width: 100%;
+        left: 0;
+        height: 100px;
+    }
+
+    .circle-date {
+        font-size: 1.5em;
+        top: 30%;
+    }
+
+    .circle-date2 {
+
+        top: 60%;
+    }
+
+}
+
+@media (max-width: 600px) {
+
+    .info-circle {
+    }
+
+}

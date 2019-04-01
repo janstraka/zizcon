@@ -1,0 +1,89 @@
+{**
+* @param string   $basePath web base path
+* @param array    $flashes  flash messages
+* @param array    $neon parameters from config.neon
+*}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>{ifset title}{include title|striptags} | {/ifset}{$neon->title_admin}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+    {include '../../baseModule/components/favicons.latte'}
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{$basePath}/css/vendor/synergic-ui/synergic-ui.min.css">
+    <link rel="stylesheet" href='https://fonts.googleapis.com/css?family=Roboto:700,400,300,200&amp;subset=cyrillic,latin,greek,vietnamese'>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="{$basePath}/css/vendor/datetimepicker/jquery.datetimepicker.css">
+
+    {include ../../baseModule/templates/_components/adminLess.latte}
+
+    {block #head}{/block}
+</head>
+
+
+{include '_components/header.latte'}
+{include '_components/menu.latte'}
+
+
+{*<div class="buttons-header-wrapper">
+    <a class="button-link button-admin">{$user->identity->email}</a>
+    <a class="button-link button-admin" n:href="Users:mySettings">Moje nastavení</a>
+    <a class="button-link button-admin" n:href=":Admin:Sign:out">Odhlásit</a>
+</div>*}
+{*
+<div n:if="$user->isInRole('admin')">
+    $neon->title_admin
+</div>
+*}
+
+<div class="admin-content {ifCurrent Sign:in}navbar-hidden{/ifCurrent} ">
+    <div class="container">
+
+            {include #content}
+
+    </div>
+</div>
+
+<div n:foreach="$flashes as $flash" n:class="flash, $flash->type">
+    <div id="hidecross"><a href="#"><i class="fa fa-times-circle-o"></i></a></div>
+    <p>{$flash->message} </p>
+</div>
+
+
+
+{* fiksme vse presunout pod vendor/ *}
+{block #scripts}
+    <script> var basePath = {$basePath}; </script>
+
+    <script src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/i18n/jquery-ui-i18n.js"></script>
+    <script src="{$basePath}/js/vendor/synergic-ui/synergic-ui.min.js"></script>
+    <script src="{$basePath}/js/vendor/nette/netteForms.min.js"></script>
+    <script src="{$basePath}/js/vendor/datetimepicker/jquery.js"></script>
+    <script src="{$basePath}/js/vendor/datetimepicker/jquery.datetimepicker.full.min.js"></script>
+    <script src="{$basePath}/js/baseModule/formFiller.js"></script>
+    <script src="{$basePath}/js/vendor/tinymce/tinymce.min.js"></script>
+    <script src="{$basePath}/js/baseModule/scripts.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="{$basePath}/js/adminModule/scripts.js"></script>
+
+
+
+{/block}
+{define #script, files}
+    {foreach $files as $file}
+        <script src="{$basePath . '/js' . $file}"></script>
+    {/foreach}
+{/define}
+{define #style, files}
+    {foreach $files as $file}
+        <link rel="stylesheet" href="{$basePath . '/css' . $file}"/>
+    {/foreach}
+{/define}
+</body>
+</html>

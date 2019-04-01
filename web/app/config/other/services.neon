@@ -1,0 +1,59 @@
+services:
+    -
+        class: Console\ProjectInstall
+        tags: [kdyby.console.command]
+    router: Routers\RouterFactory::createRouter
+    tracy.logger:
+        autowired: no
+    logger:
+        class: Libs\IcLogger
+        arguments: [%appDir%/../log, 'noreply@incolor.cz']
+        inject: yes
+
+    - Libs\ProjectInitializer
+    - Model\Emails
+    - Model\Users
+    - Model\Notices
+    - Model\EmailLogs
+    - Model\EmailTemplates
+    - Model\Reservations
+    - Model\Authenticator
+    - Model\Authorizator
+    - Model\Events
+    - Model\Days
+    - Model\Games
+
+    - App\Forms\FormFactory
+    - App\Forms\SignFormFactory
+    - App\Forms\ITicketFormFactory
+    - Nette\Mail\SendmailMailer
+
+    # BASEMODULE
+    - BaseModule\Components\TemplateMailer
+
+
+    # ADMINMODULE
+    - AdminModule\Components\ISignInFormFactory
+    - AdminModule\Components\INoticeFormFactory
+    - AdminModule\Components\IUserFormFactory
+    - AdminModule\Components\IEmailFormFactory
+    - AdminModule\Components\IEmailTemplateFormFactory
+    - AdminModule\Components\IProgramFormFactory
+
+
+    # FRONTMODULE
+#    - FrontModule\Components\ISignInFormFactory
+#    - FrontModule\Components\ISignUpFormFactory
+#    - FrontModule\Components\IForgottenPasswordFormFactory
+#    - FrontModule\Components\ISubscribeFormFactory
+#    - FrontModule\Components\IContactFormFactory
+
+#    - Kdyby\Doctrine\DI\OrmExtension
+#
+#    -
+##        class: Gedmo\Uploadable\UploadableListener
+#        tags: [kdyby.subscriber]
+#    -
+#        class: Libs\NetteUploadableListener
+#        tags: [kdyby.subscriber]
+#
