@@ -3,7 +3,7 @@
         <div class="row form-group">
             <div class="col-xs-5 text-right"></div>
             <div class="col-xs-3">Plné</div>
-            <div class="col-xs-3">Zlevněné</div>
+            <div class="col-xs-3">Zlevněné <span class="red">**</span></div>
         </div>
 
         <div class="row form-group">
@@ -16,6 +16,7 @@
             </div>
         </div>
 
+{*
         <div class="row form-group">
             <div class="col-xs-5 text-right">Jednodenní</div>
             <div class="col-xs-3">
@@ -23,6 +24,83 @@
             </div>
             <div class="col-xs-3 cash">
                 {label ticket_price:180, class => "price-radio"} {input ticket_price:180} {$_label}{/label}
+            </div>
+        </div>
+*}
+
+        <div class="row form-group">
+            <div class="col-xs-5 text-right">Čtvrtek</div>
+            <div class="col-xs-3">
+                {label ticket_price:100, class => "price-radio"} {input ticket_price:100} {$_label}{/label}
+            </div>
+            <div class="col-xs-3 cash">
+                {label ticket_price:90, class => "price-radio"} {input ticket_price:90} {$_label}{/label}
+            </div>
+        </div>
+
+{*
+        <div class="row form-group">
+            <div class="col-xs-5 text-right">Čtvrtek po 17:00</div>
+            <div class="col-xs-3">
+                {label ticket_price:100, class => "price-radio"} {input ticket_price:100} {$_label}{/label}
+            </div>
+            <div class="col-xs-3 cash">
+                {label ticket_price:90, class => "price-radio"} {input ticket_price:90} {$_label}{/label}
+            </div>
+        </div>
+*}
+
+        <div class="row form-group">
+            <div class="col-xs-5 text-right">Pátek <span class="red">*</span></div>
+            <div class="col-xs-3">
+                {label ticket_price:200, class => "price-radio"} {input ticket_price:200} {$_label}{/label}
+            </div>
+            <div class="col-xs-3 cash">
+                {label ticket_price:180, class => "price-radio"} {input ticket_price:180} {$_label}{/label}
+            </div>
+        </div>
+
+{*
+        <div class="row form-group">
+            <div class="col-xs-5 text-right">Pátek po 17:00</div>
+            <div class="col-xs-3">
+                {label ticket_price:100, class => "price-radio"} {input ticket_price:100} {$_label}{/label}
+            </div>
+            <div class="col-xs-3 cash">
+                {label ticket_price:90, class => "price-radio"} {input ticket_price:90} {$_label}{/label}
+            </div>
+        </div>
+*}
+
+        <div class="row form-group">
+            <div class="col-xs-5 text-right">Sobota <span class="red">*</span></div>
+            <div class="col-xs-3">
+                {label ticket_price:200, class => "price-radio"} {input ticket_price:200} {$_label}{/label}
+            </div>
+            <div class="col-xs-3 cash">
+                {label ticket_price:180, class => "price-radio"} {input ticket_price:180} {$_label}{/label}
+            </div>
+        </div>
+
+{*
+        <div class="row form-group">
+            <div class="col-xs-5 text-right">Sobota po 17:00</div>
+            <div class="col-xs-3">
+                {label ticket_price:100, class => "price-radio"} {input ticket_price:100} {$_label}{/label}
+            </div>
+            <div class="col-xs-3 cash">
+                {label ticket_price:90, class => "price-radio"} {input ticket_price:90} {$_label}{/label}
+            </div>
+        </div>
+*}
+
+        <div class="row form-group">
+            <div class="col-xs-5 text-right">Neděle</div>
+            <div class="col-xs-3">
+                {label ticket_price:100, class => "price-radio"} {input ticket_price:100} {$_label}{/label}
+            </div>
+            <div class="col-xs-3 cash">
+                {label ticket_price:90, class => "price-radio"} {input ticket_price:90} {$_label}{/label}
             </div>
         </div>
 
@@ -111,11 +189,10 @@
     {/form}
     <ul class="small-text">
         {* <li><span class="red">*</span> Různé druhy lístků objednávejte jednotlivě</li> *}
-        <li><span class="red">*</span> Nárok na zlevněné vstupné mají studenti (po předložení platného průkazu),
-            důchodci, ZTP, ZTP/P a děti od 10 do 15 let.
-        </li>
-        <li><span class="red">**</span> Děti do 10 let mají vstupné zdarma.</li>
-        <li><span class="red">***</span>
+       <li><span class="red">*</span> V případě příchodu po 17h sleva 50% z ceny lístku
+       <li><span class="red">**</span> Nárok na zlevněné vstupné mají studenti (po předložení platného průkazu), důchodci, ZTP, ZTP/P a děti od 10 do 15 let.</li>
+        <li><span class="red">***</span> Děti do 10 let mají vstupné zdarma.</li>
+        <li><span class="red">****</span>
             <b>Prohlášení k ochraně osobních údajů: </b>
             Veškeré osobní údaje poskytnuté účastníky festivalu slouží výlučně pro potřeby organizace festivalu a nejsou poskytovány dalším subjektům. 
             Osobní údaje účastníků slouží výhradně k jejich informování o programu před, v průběhu a bezprostředně po ukončení festivalu. 
