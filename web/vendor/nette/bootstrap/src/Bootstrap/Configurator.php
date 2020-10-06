@@ -355,3 +355,4 @@ class Configurator extends Object
 	}
 
 }
+	
