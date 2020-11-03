@@ -5,6 +5,8 @@
  * Copyright (c) 2004 David Grudl (https://davidgrudl.com)
  */
 
+declare(strict_types=1);
+
 namespace Nette\Forms;
 
 
@@ -13,11 +15,10 @@ namespace Nette\Forms;
  */
 interface IControl
 {
-
 	/**
 	 * Sets control's value.
-	 * @param  mixed
-	 * @return void
+	 * @param  mixed  $value
+	 * @return static
 	 */
 	function setValue($value);
 
@@ -27,29 +28,15 @@ interface IControl
 	 */
 	function getValue();
 
-	/**
-	 * @return void
-	 */
-	function validate();
+	function validate(): void;
 
 	/**
 	 * Returns errors corresponding to control.
-	 * @return array
 	 */
-	function getErrors();
+	function getErrors(): array;
 
 	/**
 	 * Is control value excluded from $form->getValues() result?
-	 * @return bool
 	 */
-	function isOmitted();
-
-	/**
-	 * Returns translated string.
-	 * @param  string
-	 * @param  int      plural count
-	 * @return string
-	 */
-	function translate($s, $count = NULL);
-
+	function isOmitted(): bool;
 }

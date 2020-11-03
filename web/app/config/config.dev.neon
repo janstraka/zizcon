@@ -1,5 +1,0 @@
-doctrine:
-    host: mysql4.ebola.cz
-    user: incolorcz_color
-    password: skakalpespresov3s
-    dbname: incolorcz_zizcon

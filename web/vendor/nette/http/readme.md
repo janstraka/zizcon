@@ -2,18 +2,42 @@ Nette HTTP Component
 ====================
 
 [![Downloads this Month](https://img.shields.io/packagist/dm/nette/http.svg)](https://packagist.org/packages/nette/http)
-[![Build Status](https://travis-ci.org/nette/http.svg?branch=v2.3)](https://travis-ci.org/nette/http)
+[![Build Status](https://travis-ci.org/nette/http.svg?branch=master)](https://travis-ci.org/nette/http)
+[![Build Status Windows](https://ci.appveyor.com/api/projects/status/github/nette/http?branch=master&svg=true)](https://ci.appveyor.com/project/dg/http/branch/master)
+[![Coverage Status](https://coveralls.io/repos/github/nette/http/badge.svg?branch=master)](https://coveralls.io/github/nette/http?branch=master)
+[![Latest Stable Version](https://poser.pugx.org/nette/http/v/stable)](https://github.com/nette/http/releases)
+[![License](https://img.shields.io/badge/license-New%20BSD-blue.svg)](https://github.com/nette/http/blob/master/license.md)
+
+
+Introduction
+------------
 
 HTTP request and response are encapsulated in `Nette\Http\Request` and `Nette\Http\Response` objects which offer comfortable API and also act as
 sanitization filter.
 
+Documentation can be found on the [website](https://doc.nette.org/http-request-response).
+
+If you like Nette, **[please make a donation now](https://nette.org/donate)**. Thank you!
+
+
+Installation
+------------
+
+The recommended way to install is via Composer:
+
+```
+composer require nette/http
+```
+
+It requires PHP version 7.1 and supports PHP up to 7.4.
+
 
 HTTP Request
--------------
+------------
 
-Nette cleans out data sent by user from control and invalid characters. It also removes any //magic_quotes//.
+Nette cleans out data sent by user from control and invalid characters.
 
-The URL of the request is available as [api:Nette\Http\UrlScript] instance:
+The URL of the request is available as Nette\Http\UrlScript instance:
 
 ```php
 $url = $httpRequest->getUrl();
@@ -48,7 +72,7 @@ echo $httpRequest->getRemoteAddress(); // user's IP address
 echo $httpRequest->getRemoteHost();    // and its DNS translation
 ```
 
-What URL the user came from? Returned as [Nette\Http\Url |urls] object.
+What URL the user came from? Returned as Nette\Http\Url object.
 
 ```php
 echo $httpRequest->getReferer()->host;
@@ -58,16 +82,16 @@ Request parameters:
 
 ```php
 $get = $httpRequest->getQuery();    // array of all URL parameters
-$id = $httpRequest->getQuery('id'); // returns GET parameter 'id' (or NULL)
+$id = $httpRequest->getQuery('id'); // returns GET parameter 'id' (or null)
 
 $post = $httpRequest->getPost();    // array of all POST parameters
-$id = $httpRequest->getPost('id');  // returns POST parameter 'id' (or NULL)
+$id = $httpRequest->getPost('id');  // returns POST parameter 'id' (or null)
 
 $cookies = $httpRequest->getCookies(); // array of all cookies
-$sessId = $httpRequest->getCookie('sess_id'); // returns the cookie (or NULL)
+$sessId = $httpRequest->getCookie('sess_id'); // returns the cookie (or null)
 ```
 
-Uploaded files are encapsulated into [api:Nette\Http\FileUpload] objects:
+Uploaded files are encapsulated into Nette\Http\FileUpload objects:
 
 ```php
 $files = $httpRequest->getFiles(); // array of all uploaded files
@@ -100,9 +124,9 @@ echo $httpRequest->detectLanguage($langs); // en
 
 
 RequestFactory and URL filtering
-------------------
+--------------------------------
 
-Object holding current HTTP request is created by [api:Nette\Http\RequstFactory]. Its behavior can be modified.
+Object holding current HTTP request is created by Nette\Http\RequestFactory. Its behavior can be modified.
 It's possible to clean up URLs from characters that can get into them because of poorly implemented comment systems on various other websites by using filters:
 
 ```php
@@ -122,19 +146,19 @@ And then we let the factory generate a new `httpRequest` and we store it in a sy
 
 ```php
 // $container is a system container
-$container->addService('httpRequest', $requestFactory->createHttpRequest());
+$container->addService('httpRequest', $requestFactory->fromGlobals());
 ```
 
 
 HTTP response
---------------
+-------------
 
-Whether it is still possible to send headers or change the status code tells the `isSent()` method. If it returns TRUE,
+Whether it is still possible to send headers or change the status code tells the `isSent()` method. If it returns true,
 it won't be possible to send another header or change the status code.
 
-In that case, any attempt to send header or change code invokes `Nette\InvalidStateException`. .[caution]
+In that case, any attempt to send header or change code invokes `Nette\InvalidStateException`.
 
- [Response status code | http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10] can be sent and retrieved this way:
+Response status code can be sent and retrieved this way:
 
 ```php
 $httpResponse->setCode(Nette\Http\Response::S404_NOT_FOUND);
@@ -164,7 +188,7 @@ Http\IResponse::S501_NOT_IMPLEMENTED
 Http\IResponse::S503_SERVICE_UNAVAILABLE
 ```
 
-Method `setContentType($type, $charset=NULL)` changes `Content-Type` response header:
+Method `setContentType($type, $charset=null)` changes `Content-Type` response header:
 
 ```php
 $httpResponse->setContentType('text/plain', 'UTF-8');
@@ -215,4 +239,4 @@ $httpResponse->deleteCookie('lang'); // delete cookie
 ```
 
 These two methods can take more parameters: `$path` (subdirectory where the cookie will be available),
-`$domain` and `$secure`. Their detailed description can be found in PHP manual for [php:setcookie] function.
+`$domain` and `$secure`. Their detailed description can be found in PHP manual for setcookie function.

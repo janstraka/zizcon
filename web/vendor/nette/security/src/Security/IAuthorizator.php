@@ -1,9 +1,11 @@
 <?php
 
 /**
- * This file is part of the Nette Framework (http://nette.org)
- * Copyright (c) 2004 David Grudl (http://davidgrudl.com)
+ * This file is part of the Nette Framework (https://nette.org)
+ * Copyright (c) 2004 David Grudl (https://davidgrudl.com)
  */
+
+declare(strict_types=1);
 
 namespace Nette\Security;
 
@@ -15,22 +17,19 @@ namespace Nette\Security;
 interface IAuthorizator
 {
 	/** Set type: all */
-	const ALL = NULL;
+	public const ALL = null;
 
 	/** Permission type: allow */
-	const ALLOW = TRUE;
+	public const ALLOW = true;
 
 	/** Permission type: deny */
-	const DENY = FALSE;
-
+	public const DENY = false;
 
 	/**
 	 * Performs a role-based authorization.
-	 * @param  string  role
-	 * @param  string  resource
-	 * @param  string  privilege
-	 * @return bool
+	 * @param  string|null  $role
+	 * @param  string|null  $resource
+	 * @param  string|null  $privilege
 	 */
-	function isAllowed($role, $resource, $privilege);
-
+	function isAllowed($role, $resource, $privilege): bool;
 }

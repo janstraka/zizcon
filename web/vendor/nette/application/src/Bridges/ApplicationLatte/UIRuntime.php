@@ -5,57 +5,33 @@
  * Copyright (c) 2004 David Grudl (https://davidgrudl.com)
  */
 
+declare(strict_types=1);
+
 namespace Nette\Bridges\ApplicationLatte;
 
+use Latte;
 use Nette;
-use Nette\Application\UI;
 
 
 /**
  * Runtime helpers for UI macros.
  * @internal
  */
-class UIRuntime extends Nette\Object
+final class UIRuntime
 {
+	use Nette\StaticClass;
 
-	public static function renderSnippets(UI\Control $control, \stdClass $local, array $params)
+	public static function initialize(Latte\Runtime\Template $template, &$parentName, array $blocks): void
 	{
-		$control->snippetMode = FALSE;
-		$payload = $control->getPresenter()->getPayload();
-		if (isset($local->blocks)) {
-			foreach ($local->blocks as $name => $function) {
-				if ($name[0] !== '_' || !$control->isControlInvalid((string) substr($name, 1))) {
-					continue;
-				}
-				ob_start(function () {});
-				$function = reset($function);
-				$snippets = $function($local, $params + array('_snippetMode' => TRUE));
-				$payload->snippets[$id = $control->getSnippetId((string) substr($name, 1))] = ob_get_clean();
-				if ($snippets !== NULL) { // pass FALSE from snippetArea
-					if ($snippets) {
-						$payload->snippets += $snippets;
-					}
-					unset($payload->snippets[$id]);
-				}
-			}
-		}
-		$control->snippetMode = TRUE;
-		if ($control instanceof UI\IRenderable) {
-			$queue = array($control);
-			do {
-				foreach (array_shift($queue)->getComponents() as $child) {
-					if ($child instanceof UI\IRenderable) {
-						if ($child->isControlInvalid()) {
-							$child->snippetMode = TRUE;
-							$child->render();
-							$child->snippetMode = FALSE;
-						}
-					} elseif ($child instanceof Nette\ComponentModel\IContainer) {
-						$queue[] = $child;
-					}
-				}
-			} while ($queue);
+		$providers = $template->global;
+		$blocks = array_filter(array_keys($blocks), function (string $s): bool { return $s[0] !== '_'; });
+		if (
+			$parentName === null
+			&& $blocks
+			&& !$template->getReferringTemplate()
+			&& ($providers->uiControl ?? null) instanceof Nette\Application\UI\Presenter
+		) {
+			$parentName = $providers->uiControl->findLayoutTemplateFile();
 		}
 	}
-
 }

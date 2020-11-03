@@ -5,6 +5,8 @@
  * Copyright (c) 2004 David Grudl (https://davidgrudl.com)
  */
 
+declare(strict_types=1);
+
 namespace Nette\Http;
 
 use Nette;
@@ -20,15 +22,17 @@ use Nette;
  * @property-read array $cookies
  * @property-read string $method
  * @property-read array $headers
- * @property-read Url|NULL $referer
+ * @property-read UrlImmutable|null $referer
  * @property-read bool $secured
  * @property-read bool $ajax
- * @property-read string|NULL $remoteAddress
- * @property-read string|NULL $remoteHost
- * @property-read string|NULL $rawBody
+ * @property-read string|null $remoteAddress
+ * @property-read string|null $remoteHost
+ * @property-read string|null $rawBody
  */
-class Request extends Nette\Object implements IRequest
+class Request implements IRequest
 {
+	use Nette\SmartObject;
+
 	/** @var string */
 	private $method;
 
@@ -47,24 +51,20 @@ class Request extends Nette\Object implements IRequest
 	/** @var array */
 	private $headers;
 
-	/** @var string|NULL */
+	/** @var string|null */
 	private $remoteAddress;
 
-	/** @var string|NULL */
+	/** @var string|null */
 	private $remoteHost;
 
-	/** @var callable|NULL */
+	/** @var callable|null */
 	private $rawBodyCallback;
 
 
-	public function __construct(UrlScript $url, $query = NULL, $post = NULL, $files = NULL, $cookies = NULL,
-		$headers = NULL, $method = NULL, $remoteAddress = NULL, $remoteHost = NULL, $rawBodyCallback = NULL)
+	public function __construct(UrlScript $url, array $post = null, array $files = null, array $cookies = null,
+		array $headers = null, string $method = null, string $remoteAddress = null, string $remoteHost = null, callable $rawBodyCallback = null)
 	{
 		$this->url = $url;
-		if ($query !== NULL) {
-			trigger_error('Nette\Http\Request::__construct(): parameter $query is deprecated.', E_USER_DEPRECATED);
-			$url->setQuery($query);
-		}
 		$this->post = (array) $post;
 		$this->files = (array) $files;
 		$this->cookies = (array) $cookies;
@@ -76,13 +76,21 @@ class Request extends Nette\Object implements IRequest
 	}
 
 
+	/** @return static */
+	public function withUrl(UrlScript $url)
+	{
+		$dolly = clone $this;
+		$dolly->url = $url;
+		return $dolly;
+	}
+
+
 	/**
 	 * Returns URL object.
-	 * @return UrlScript
 	 */
-	public function getUrl()
+	public function getUrl(): UrlScript
 	{
-		return clone $this->url;
+		return $this->url;
 	}
 
 
@@ -92,62 +100,49 @@ class Request extends Nette\Object implements IRequest
 	/**
 	 * Returns variable provided to the script via URL query ($_GET).
 	 * If no key is passed, returns the entire array.
-	 * @param  string key
-	 * @param  mixed  default value
 	 * @return mixed
 	 */
-	public function getQuery($key = NULL, $default = NULL)
+	public function getQuery(string $key = null)
 	{
 		if (func_num_args() === 0) {
 			return $this->url->getQueryParameters();
-		} else {
-			return $this->url->getQueryParameter($key, $default);
+		} elseif (func_num_args() > 1) {
+			trigger_error(__METHOD__ . '() parameter $default is deprecated, use operator ??', E_USER_DEPRECATED);
 		}
+		return $this->url->getQueryParameter($key);
 	}
 
 
 	/**
 	 * Returns variable provided to the script via POST method ($_POST).
 	 * If no key is passed, returns the entire array.
-	 * @param  string key
-	 * @param  mixed  default value
 	 * @return mixed
 	 */
-	public function getPost($key = NULL, $default = NULL)
+	public function getPost(string $key = null)
 	{
 		if (func_num_args() === 0) {
 			return $this->post;
-
-		} elseif (isset($this->post[$key])) {
-			return $this->post[$key];
-
-		} else {
-			return $default;
+		} elseif (func_num_args() > 1) {
+			trigger_error(__METHOD__ . '() parameter $default is deprecated, use operator ??', E_USER_DEPRECATED);
 		}
+		return $this->post[$key] ?? null;
 	}
 
 
 	/**
 	 * Returns uploaded file.
-	 * @param  string key
-	 * @return FileUpload|NULL
+	 * @return FileUpload|array|null
 	 */
-	public function getFile($key)
+	public function getFile(string $key)
 	{
-		if (func_num_args() > 1) {
-			trigger_error('Calling getFile() with multiple keys is deprecated.', E_USER_DEPRECATED);
-			return Nette\Utils\Arrays::get($this->files, func_get_args(), NULL);
-		}
-
-		return isset($this->files[$key]) ? $this->files[$key] : NULL;
+		return $this->files[$key] ?? null;
 	}
 
 
 	/**
 	 * Returns uploaded files.
-	 * @return array
 	 */
-	public function getFiles()
+	public function getFiles(): array
 	{
 		return $this->files;
 	}
@@ -155,21 +150,21 @@ class Request extends Nette\Object implements IRequest
 
 	/**
 	 * Returns variable provided to the script via HTTP cookies.
-	 * @param  string key
-	 * @param  mixed  default value
 	 * @return mixed
 	 */
-	public function getCookie($key, $default = NULL)
+	public function getCookie(string $key)
 	{
-		return isset($this->cookies[$key]) ? $this->cookies[$key] : $default;
+		if (func_num_args() > 1) {
+			trigger_error(__METHOD__ . '() parameter $default is deprecated, use operator ??', E_USER_DEPRECATED);
+		}
+		return $this->cookies[$key] ?? null;
 	}
 
 
 	/**
 	 * Returns variables provided to the script via HTTP cookies.
-	 * @return array
 	 */
-	public function getCookies()
+	public function getCookies(): array
 	{
 		return $this->cookies;
 	}
@@ -180,9 +175,8 @@ class Request extends Nette\Object implements IRequest
 
 	/**
 	 * Returns HTTP request method (GET, POST, HEAD, PUT, ...). The method is case-sensitive.
-	 * @return string
 	 */
-	public function getMethod()
+	public function getMethod(): string
 	{
 		return $this->method;
 	}
@@ -190,43 +184,31 @@ class Request extends Nette\Object implements IRequest
 
 	/**
 	 * Checks if the request method is the given one.
-	 * @param  string
-	 * @return bool
 	 */
-	public function isMethod($method)
+	public function isMethod(string $method): bool
 	{
 		return strcasecmp($this->method, $method) === 0;
 	}
 
 
 	/**
-	 * @deprecated
-	 */
-	public function isPost()
-	{
-		return $this->isMethod('POST');
-	}
-
-
-	/**
 	 * Return the value of the HTTP header. Pass the header name as the
 	 * plain, HTTP-specified header name (e.g. 'Accept-Encoding').
-	 * @param  string
-	 * @param  mixed
-	 * @return mixed
 	 */
-	public function getHeader($header, $default = NULL)
+	public function getHeader(string $header): ?string
 	{
+		if (func_num_args() > 1) {
+			trigger_error(__METHOD__ . '() parameter $default is deprecated, use operator ??', E_USER_DEPRECATED);
+		}
 		$header = strtolower($header);
-		return isset($this->headers[$header]) ? $this->headers[$header] : $default;
+		return $this->headers[$header] ?? null;
 	}
 
 
 	/**
 	 * Returns all HTTP headers.
-	 * @return array
 	 */
-	public function getHeaders()
+	public function getHeaders(): array
 	{
 		return $this->headers;
 	}
@@ -234,29 +216,37 @@ class Request extends Nette\Object implements IRequest
 
 	/**
 	 * Returns referrer.
-	 * @return Url|NULL
 	 */
-	public function getReferer()
+	public function getReferer(): ?UrlImmutable
 	{
-		return isset($this->headers['referer']) ? new Url($this->headers['referer']) : NULL;
+		return isset($this->headers['referer'])
+			? new UrlImmutable($this->headers['referer'])
+			: null;
 	}
 
 
 	/**
-	 * Is the request is sent via secure channel (https).
-	 * @return bool
+	 * Is the request sent via secure channel (https)?
 	 */
-	public function isSecured()
+	public function isSecured(): bool
 	{
 		return $this->url->getScheme() === 'https';
 	}
 
 
 	/**
-	 * Is AJAX request?
-	 * @return bool
+	 * Is the request sent from the same origin?
 	 */
-	public function isAjax()
+	public function isSameSite(): bool
+	{
+		return isset($this->cookies['nette-samesite']);
+	}
+
+
+	/**
+	 * Is AJAX request?
+	 */
+	public function isAjax(): bool
 	{
 		return $this->getHeader('X-Requested-With') === 'XMLHttpRequest';
 	}
@@ -264,9 +254,8 @@ class Request extends Nette\Object implements IRequest
 
 	/**
 	 * Returns the IP address of the remote client.
-	 * @return string|NULL
 	 */
-	public function getRemoteAddress()
+	public function getRemoteAddress(): ?string
 	{
 		return $this->remoteAddress;
 	}
@@ -274,12 +263,11 @@ class Request extends Nette\Object implements IRequest
 
 	/**
 	 * Returns the host of the remote client.
-	 * @return string|NULL
 	 */
-	public function getRemoteHost()
+	public function getRemoteHost(): ?string
 	{
-		if ($this->remoteHost === NULL && $this->remoteAddress !== NULL) {
-			$this->remoteHost = getHostByAddr($this->remoteAddress);
+		if ($this->remoteHost === null && $this->remoteAddress !== null) {
+			$this->remoteHost = gethostbyaddr($this->remoteAddress);
 		}
 		return $this->remoteHost;
 	}
@@ -287,24 +275,22 @@ class Request extends Nette\Object implements IRequest
 
 	/**
 	 * Returns raw content of HTTP request body.
-	 * @return string|NULL
 	 */
-	public function getRawBody()
+	public function getRawBody(): ?string
 	{
-		return $this->rawBodyCallback ? call_user_func($this->rawBodyCallback) : NULL;
+		return $this->rawBodyCallback ? ($this->rawBodyCallback)() : null;
 	}
 
 
 	/**
 	 * Parse Accept-Language header and returns preferred language.
-	 * @param  string[] supported languages
-	 * @return string|NULL
+	 * @param  string[]  $langs  supported languages
 	 */
-	public function detectLanguage(array $langs)
+	public function detectLanguage(array $langs): ?string
 	{
 		$header = $this->getHeader('Accept-Language');
 		if (!$header) {
-			return NULL;
+			return null;
 		}
 
 		$s = strtolower($header);  // case insensitive
@@ -313,11 +299,11 @@ class Request extends Nette\Object implements IRequest
 		preg_match_all('#(' . implode('|', $langs) . ')(?:-[^\s,;=]+)?\s*(?:;\s*q=([0-9.]+))?#', $s, $matches);
 
 		if (!$matches[0]) {
-			return NULL;
+			return null;
 		}
 
 		$max = 0;
-		$lang = NULL;
+		$lang = null;
 		foreach ($matches[1] as $key => $value) {
 			$q = $matches[2][$key] === '' ? 1.0 : (float) $matches[2][$key];
 			if ($q > $max) {
@@ -328,5 +314,4 @@ class Request extends Nette\Object implements IRequest
 
 		return $lang;
 	}
-
 }

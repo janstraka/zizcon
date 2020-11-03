@@ -5,6 +5,8 @@
  * Copyright (c) 2004 David Grudl (https://davidgrudl.com)
  */
 
+declare(strict_types=1);
+
 namespace Nette\Forms;
 
 
@@ -13,11 +15,8 @@ namespace Nette\Forms;
  */
 interface IFormRenderer
 {
-
 	/**
 	 * Provides complete form rendering.
-	 * @return string
 	 */
-	function render(Form $form);
-
+	function render(Form $form): string;
 }

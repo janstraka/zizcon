@@ -5,6 +5,8 @@
  * Copyright (c) 2004 David Grudl (https://davidgrudl.com)
  */
 
+declare(strict_types=1);
+
 namespace Nette\Database\Table;
 
 use Nette\Database;
@@ -15,17 +17,28 @@ use Nette\Database;
  */
 interface IRow extends Database\IRow
 {
-
 	function setTable(Selection $name);
 
-	function getTable();
+	function getTable(): Selection;
 
-	function getPrimary($need = TRUE);
+	/**
+	 * Returns primary key value.
+	 * @return mixed
+	 */
+	function getPrimary(bool $throw = true);
 
-	function getSignature($need = TRUE);
+	/**
+	 * Returns row signature (composition of primary keys)
+	 */
+	function getSignature(bool $throw = true): string;
 
-	function related($key, $throughColumn = NULL);
+	/**
+	 * Returns referencing rows.
+	 */
+	function related(string $key, string $throughColumn = null): GroupedSelection;
 
-	function ref($key, $throughColumn = NULL);
-
+	/**
+	 * Returns referenced row.
+	 */
+	function ref(string $key, string $throughColumn = null): ?self;
 }

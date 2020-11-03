@@ -1,9 +1,11 @@
 <?php
 
 /**
- * This file is part of the Nette Framework (http://nette.org)
- * Copyright (c) 2004 David Grudl (http://davidgrudl.com)
+ * This file is part of the Nette Framework (https://nette.org)
+ * Copyright (c) 2004 David Grudl (https://davidgrudl.com)
  */
+
+declare(strict_types=1);
 
 namespace Nette\Security;
 
@@ -15,10 +17,16 @@ use Nette;
  *
  * @property   mixed $id
  * @property   array $roles
- * @property-read array $data
+ * @property   array $data
  */
-class Identity extends Nette\Object implements IIdentity
+class Identity implements IIdentity
 {
+	use Nette\SmartObject {
+		__get as private parentGet;
+		__set as private parentSet;
+		__isset as private parentIsSet;
+	}
+
 	/** @var mixed */
 	private $id;
 
@@ -29,12 +37,7 @@ class Identity extends Nette\Object implements IIdentity
 	private $data;
 
 
-	/**
-	 * @param  mixed   identity ID
-	 * @param  mixed   roles
-	 * @param  array   user data
-	 */
-	public function __construct($id, $roles = NULL, $data = NULL)
+	public function __construct($id, $roles = null, iterable $data = null)
 	{
 		$this->setId($id);
 		$this->setRoles((array) $roles);
@@ -44,8 +47,7 @@ class Identity extends Nette\Object implements IIdentity
 
 	/**
 	 * Sets the ID of user.
-	 * @param  mixed
-	 * @return self
+	 * @return static
 	 */
 	public function setId($id)
 	{
@@ -66,8 +68,7 @@ class Identity extends Nette\Object implements IIdentity
 
 	/**
 	 * Sets a list of roles that the user is a member of.
-	 * @param  array
-	 * @return self
+	 * @return static
 	 */
 	public function setRoles(array $roles)
 	{
@@ -78,9 +79,8 @@ class Identity extends Nette\Object implements IIdentity
 
 	/**
 	 * Returns a list of roles that the user is a member of.
-	 * @return array
 	 */
-	public function getRoles()
+	public function getRoles(): array
 	{
 		return $this->roles;
 	}
@@ -88,9 +88,8 @@ class Identity extends Nette\Object implements IIdentity
 
 	/**
 	 * Returns a user data.
-	 * @return array
 	 */
-	public function getData()
+	public function getData(): array
 	{
 		return $this->data;
 	}
@@ -98,14 +97,11 @@ class Identity extends Nette\Object implements IIdentity
 
 	/**
 	 * Sets user data value.
-	 * @param  string  property name
-	 * @param  mixed   property value
-	 * @return void
 	 */
-	public function __set($key, $value)
+	public function __set(string $key, $value): void
 	{
-		if (parent::__isset($key)) {
-			parent::__set($key, $value);
+		if ($this->parentIsSet($key)) {
+			$this->parentSet($key, $value);
 
 		} else {
 			$this->data[$key] = $value;
@@ -115,13 +111,12 @@ class Identity extends Nette\Object implements IIdentity
 
 	/**
 	 * Returns user data value.
-	 * @param  string  property name
 	 * @return mixed
 	 */
-	public function &__get($key)
+	public function &__get(string $key)
 	{
-		if (parent::__isset($key)) {
-			return parent::__get($key);
+		if ($this->parentIsSet($key)) {
+			return $this->parentGet($key);
 
 		} else {
 			return $this->data[$key];
@@ -129,26 +124,8 @@ class Identity extends Nette\Object implements IIdentity
 	}
 
 
-	/**
-	 * Is property defined?
-	 * @param  string  property name
-	 * @return bool
-	 */
-	public function __isset($key)
+	public function __isset(string $key): bool
 	{
-		return isset($this->data[$key]) || parent::__isset($key);
+		return isset($this->data[$key]) || $this->parentIsSet($key);
 	}
-
-
-	/**
-	 * Removes property.
-	 * @param  string  property name
-	 * @return void
-	 * @throws Nette\MemberAccessException
-	 */
-	public function __unset($name)
-	{
-		Nette\Utils\ObjectMixin::remove($this, $name);
-	}
-
 }

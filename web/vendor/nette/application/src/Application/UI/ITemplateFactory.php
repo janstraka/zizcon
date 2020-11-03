@@ -5,6 +5,8 @@
  * Copyright (c) 2004 David Grudl (https://davidgrudl.com)
  */
 
+declare(strict_types=1);
+
 namespace Nette\Application\UI;
 
 
@@ -13,10 +15,5 @@ namespace Nette\Application\UI;
  */
 interface ITemplateFactory
 {
-
-	/**
-	 * @return ITemplate
-	 */
-	function createTemplate(Control $control = NULL);
-
+	function createTemplate(Control $control = null): ITemplate;
 }

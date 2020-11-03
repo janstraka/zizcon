@@ -5,6 +5,8 @@
  * Copyright (c) 2004 David Grudl (https://davidgrudl.com)
  */
 
+declare(strict_types=1);
+
 namespace Nette\Database;
 
 use Nette;
@@ -14,8 +16,10 @@ use Nette\Database\Conventions\StaticConventions;
 /**
  * Database context.
  */
-class Context extends Nette\Object
+class Context
 {
+	use Nette\SmartObject;
+
 	/** @var Connection */
 	private $connection;
 
@@ -29,7 +33,7 @@ class Context extends Nette\Object
 	private $cacheStorage;
 
 
-	public function __construct(Connection $connection, IStructure $structure, IConventions $conventions = NULL, Nette\Caching\IStorage $cacheStorage = NULL)
+	public function __construct(Connection $connection, IStructure $structure, IConventions $conventions = null, Nette\Caching\IStorage $cacheStorage = null)
 	{
 		$this->connection = $connection;
 		$this->structure = $structure;
@@ -38,94 +42,65 @@ class Context extends Nette\Object
 	}
 
 
-	/** @return void */
-	public function beginTransaction()
+	public function beginTransaction(): void
 	{
 		$this->connection->beginTransaction();
 	}
 
 
-	/** @return void */
-	public function commit()
+	public function commit(): void
 	{
 		$this->connection->commit();
 	}
 
 
-	/** @return void */
-	public function rollBack()
+	public function rollBack(): void
 	{
 		$this->connection->rollBack();
 	}
 
 
-	/**
-	 * @param  string  sequence object
-	 * @return string
-	 */
-	public function getInsertId($name = NULL)
+	public function getInsertId(string $sequence = null): string
 	{
-		return $this->connection->getInsertId($name);
+		return $this->connection->getInsertId($sequence);
 	}
 
 
 	/**
 	 * Generates and executes SQL query.
-	 * @param  string
-	 * @param  mixed   [parameters, ...]
-	 * @return ResultSet
 	 */
-	public function query($sql)
+	public function query(string $sql, ...$params): ResultSet
 	{
-		return $this->connection->query(func_get_args());
+		return $this->connection->query($sql, ...$params);
 	}
 
 
-	/**
-	 * @param  string
-	 * @return ResultSet
-	 */
-	public function queryArgs($sql, array $params)
+	public function queryArgs(string $sql, array $params): ResultSet
 	{
-		return $this->connection->queryArgs($sql, $params);
+		return $this->connection->query($sql, ...$params);
 	}
 
 
-	/**
-	 * @param  string
-	 * @return Table\Selection
-	 */
-	public function table($table)
+	public function table(string $table): Table\Selection
 	{
 		return new Table\Selection($this, $this->conventions, $table, $this->cacheStorage);
 	}
 
 
-	/** @return Connection */
-	public function getConnection()
+	public function getConnection(): Connection
 	{
 		return $this->connection;
 	}
 
 
-	/** @return IStructure */
-	public function getStructure()
+	public function getStructure(): IStructure
 	{
 		return $this->structure;
 	}
 
 
-	/** @return IConventions */
-	public function getConventions()
+	public function getConventions(): IConventions
 	{
-		return $this->conventions;
-	}
-
-
-	/** @deprecated */
-	public function getDatabaseReflection()
-	{
-		trigger_error(__METHOD__ . '() is deprecated; use getConventions() instead.', E_USER_DEPRECATED);
 		return $this->conventions;
 	}
 
@@ -135,59 +110,52 @@ class Context extends Nette\Object
 
 	/**
 	 * Shortcut for query()->fetch()
-	 * @param  string
-	 * @param  mixed   [parameters, ...]
-	 * @return Row
 	 */
-	public function fetch($args)
+	public function fetch(string $sql, ...$params): ?IRow
 	{
-		return $this->connection->query(func_get_args())->fetch();
+		return $this->connection->query($sql, ...$params)->fetch();
 	}
 
 
 	/**
 	 * Shortcut for query()->fetchField()
-	 * @param  string
-	 * @param  mixed   [parameters, ...]
 	 * @return mixed
 	 */
-	public function fetchField($args)
+	public function fetchField(string $sql, ...$params)
 	{
-		return $this->connection->query(func_get_args())->fetchField();
+		return $this->connection->query($sql, ...$params)->fetchField();
+	}
+
+
+	/**
+	 * Shortcut for query()->fetchFields()
+	 */
+	public function fetchFields(string $sql, ...$params): ?array
+	{
+		return $this->connection->query($sql, ...$params)->fetchFields();
 	}
 
 
 	/**
 	 * Shortcut for query()->fetchPairs()
-	 * @param  string
-	 * @param  mixed   [parameters, ...]
-	 * @return array
 	 */
-	public function fetchPairs($args)
+	public function fetchPairs(string $sql, ...$params): array
 	{
-		return $this->connection->query(func_get_args())->fetchPairs();
+		return $this->connection->query($sql, ...$params)->fetchPairs();
 	}
 
 
 	/**
 	 * Shortcut for query()->fetchAll()
-	 * @param  string
-	 * @param  mixed   [parameters, ...]
-	 * @return array
 	 */
-	public function fetchAll($args)
+	public function fetchAll(string $sql, ...$params): array
 	{
-		return $this->connection->query(func_get_args())->fetchAll();
+		return $this->connection->query($sql, ...$params)->fetchAll();
 	}
 
 
-	/**
-	 * @return SqlLiteral
-	 */
-	public static function literal($value)
+	public static function literal(string $value, ...$params): SqlLiteral
 	{
-		$args = func_get_args();
-		return new SqlLiteral(array_shift($args), $args);
+		return new SqlLiteral($value, $params);
 	}
-
 }

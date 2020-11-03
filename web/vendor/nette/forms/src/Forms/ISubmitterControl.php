@@ -5,6 +5,8 @@
  * Copyright (c) 2004 David Grudl (https://davidgrudl.com)
  */
 
+declare(strict_types=1);
+
 namespace Nette\Forms;
 
 
@@ -13,11 +15,8 @@ namespace Nette\Forms;
  */
 interface ISubmitterControl extends IControl
 {
-
 	/**
 	 * Gets the validation scope. Clicking the button validates only the controls within the specified scope.
-	 * @return mixed
 	 */
-	function getValidationScope();
-
+	function getValidationScope(): ?array;
 }

@@ -5,6 +5,8 @@
  * Copyright (c) 2004 David Grudl (https://davidgrudl.com)
  */
 
+declare(strict_types=1);
+
 namespace Nette\Localization;
 
 
@@ -13,13 +15,10 @@ namespace Nette\Localization;
  */
 interface ITranslator
 {
-
 	/**
 	 * Translates the given string.
-	 * @param  string   message
-	 * @param  int      plural count
-	 * @return string
+	 * @param  mixed  $message
+	 * @param  mixed  ...$parameters
 	 */
-	function translate($message, $count = NULL);
-
+	function translate($message, ...$parameters): string;
 }

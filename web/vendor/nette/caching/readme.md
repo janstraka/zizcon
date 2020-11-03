@@ -3,12 +3,37 @@ Nette Caching
 
 [![Downloads this Month](https://img.shields.io/packagist/dm/nette/caching.svg)](https://packagist.org/packages/nette/caching)
 [![Build Status](https://travis-ci.org/nette/caching.svg?branch=master)](https://travis-ci.org/nette/caching)
+[![Coverage Status](https://coveralls.io/repos/github/nette/caching/badge.svg?branch=master)](https://coveralls.io/github/nette/caching?branch=master)
+[![Latest Stable Version](https://poser.pugx.org/nette/caching/v/stable)](https://github.com/nette/caching/releases)
+[![License](https://img.shields.io/badge/license-New%20BSD-blue.svg)](https://github.com/nette/caching/blob/master/license.md)
+
+
+Introduction
+------------
 
 Cache accelerates your application by storing data - once hardly retrieved - for future use.
 
-Nette offers a very intuitive API for cache manipulation. After all, you wouldn't expect anything else, right? ;-)
-Before we show you the first example, we need to think about place where to store data physically. We can use a database, //Memcached// server,
-or the most available storage - hard drive:
+Documentation can be found on the [website](https://doc.nette.org/caching).
+If you like Nette, **[please make a donation now](https://nette.org/donate)**. Thank you!
+
+
+Installation
+------------
+
+The recommended way to install Nette Caching is via Composer:
+
+```
+composer require nette/caching
+```
+
+It requires PHP version 7.1 and supports PHP up to 7.4.
+
+
+Usage
+-----
+
+Nette Caching offers a very intuitive API for cache manipulation. Before we show you the first example, we need to think about place where
+to store data physically. We can use a database, Memcached server, or the most available storage - hard drive:
 
 ```php
 // the `temp` directory will be the storage
@@ -33,11 +58,11 @@ Let's save the contents of the '`$data`' variable under the '`$key`' key:
 $cache->save($key, $data);
 ```
 
-This way, we can read from the cache: (if there is no such item in the cache, the `NULL` value is returned)
+This way, we can read from the cache: (if there is no such item in the cache, the `null` value is returned)
 
 ```php
 $value = $cache->load($key);
-if ($value === NULL) ...
+if ($value === null) ...
 ```
 
 Method `load()` has second parameter `callable` `$fallback`, which is called when there is no such item in the cache. This callback receives the array *$dependencies* by reference, which you can use for setting expiration rules.
@@ -49,10 +74,10 @@ $value = $cache->load($key, function(& $dependencies) {
 });
 ```
 
-We could delete the item from the cache either by saving NULL or by calling `remove()` method:
+We could delete the item from the cache either by saving null or by calling `remove()` method:
 
 ```php
-$cache->save($key, NULL);
+$cache->save($key, null);
 // or
 $cache->remove($key);
 ```
@@ -71,7 +96,7 @@ $cache = new Cache($storage, 'htmlOutput');
 
 
 Caching Function Results
--------------------------
+------------------------
 
 Caching the result of a function or method call can be achieved using the `call()` method:
 
@@ -83,7 +108,7 @@ The `gethostbyaddr($ip)` will therefore be called only once and next time, only 
 different results are cached.
 
 Output Caching
-------------------
+--------------
 
 The output can be cached not only in templates:
 
@@ -96,7 +121,7 @@ if ($block = $cache->start($key)) {
 }
 ```
 
-In case that the output is already present in the cache, the `start()` method prints it and return `NULL`. Otherwise, it starts to buffer the output and
+In case that the output is already present in the cache, the `start()` method prints it and return `null`. Otherwise, it starts to buffer the output and
 returns the `$block` object using which we finally save the data to the cache.
 
 
@@ -115,13 +140,13 @@ $cache->save($key, $data, array(
 ```
 
 It's obvious from the code itself, that we saved the data for next 20 minutes. After this period, the cache will report that there is no record
-under the '`$key`' key (ie, will return `NULL`). In fact, you can use any time value that is a valid value for PHP function strToTime().
+under the '`$key`' key (ie, will return `null`). In fact, you can use any time value that is a valid value for PHP function strToTime().
 If we want to extend the validity period with each reading, it can be achieved this way:
 
 ```php
 $cache->save($key, $data, array(
 	Cache::EXPIRE => '20 minutes',
-	Cache::SLIDING => TRUE,
+	Cache::SLIDING => true,
 ));
 ```
 
@@ -206,9 +231,8 @@ $cache->clean(array(
 ```
 
 
-
 Cache Storage
---------
+-------------
 In addition to already mentioned `FileStorage`, Nette Framework also provides `MemcachedStorage` which stores
 data to the `Memcached` server, and also `MemoryStorage` for storing data in memory for duration of the request.
 The special `DevNullStorage`, which does precisely nothing, can be used for testing, when we want to eliminate the influence of caching.
@@ -227,8 +251,8 @@ The solution is to modify application behaviour so that data are created only by
 or use an anonymous function:
 
 ```php
-$result = $cache->save($key, function() { // or callback(...)
-        return buildData(); // difficult operation
+$result = $cache->save($key, function() {
+	return buildData(); // difficult operation
 });
 ```
 

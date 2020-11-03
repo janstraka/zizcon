@@ -1,6 +1,0 @@
-parameters:
-
-doctrine:
-    user: root
-    password: ''
-    dbname: zizcon

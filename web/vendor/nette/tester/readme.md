@@ -1,5 +1,5 @@
 [Nette Tester](https://tester.nette.org): enjoyable unit testing
-===============================================================
+================================================================
 
 [![Downloads this Month](https://img.shields.io/packagist/dm/nette/tester.svg)](https://packagist.org/packages/nette/tester)
 [![Build Status](https://travis-ci.org/nette/tester.svg?branch=master)](https://travis-ci.org/nette/tester)
@@ -7,22 +7,35 @@
 [![Latest Stable Version](https://poser.pugx.org/nette/tester/v/stable)](https://github.com/nette/tester/releases)
 [![License](https://img.shields.io/badge/license-New%20BSD-blue.svg)](https://github.com/nette/tester/blob/master/license.md)
 
+
+Introduction
+------------
+
 Nette Tester is a productive and enjoyable unit testing framework. It's used by
 the [Nette Framework](https://nette.org) and is capable of testing any PHP code.
+
+Documentation is available on the [Nette Tester website](https://tester.nette.org).
+Read the [blog](https://blog.nette.org/category/tester/) for new information.
+
+If you like Nette, **[please make a donation now](https://nette.org/donate)**. Thank you!
 
 
 Installation
 ------------
 
-The best way how to install is to [download a latest package](https://github.com/nette/tester/releases)
-or use a Composer:
+The recommended way to install Nette Tester is through Composer:
 
 ```
-php composer.phar require --dev nette/tester
+composer require nette/tester --dev
 ```
 
-Nette Tester requires PHP 5.3.0 or later. Collecting and processing
-code coverage information depends on Xdebug.
+Alternatively, you can download the [tester.phar](https://github.com/nette/tester/releases) file.
+
+- Nette Tester 2.3 is compatible with PHP 7.1 to 7.4
+- Nette Tester 2.1 & 2.2 is compatible with PHP 7.1 to 7.3
+- Nette Tester 2.0 is compatible with PHP 5.6 to 7.3
+
+Collecting and processing code coverage information depends on Xdebug or PCOV extension, or PHPDBG SAPI.
 
 
 Writing Tests
@@ -53,7 +66,7 @@ use Tester\Assert;
 $h = new Greeting;
 
 // use an assertion function to test say()
-Assert::same( 'Hello John', $h->say('John') );
+Assert::same('Hello John', $h->say('John'));
 ```
 
 Thats' all!
@@ -64,15 +77,16 @@ Now we run tests from command-line using the `tester` command:
 > tester
  _____ ___  ___ _____ ___  ___
 |_   _/ __)( __/_   _/ __)| _ )
-  |_| \___ /___) |_| \___ |_|_\  v1.7.1
+  |_| \___ /___) |_| \___ |_|_\  v2.3.3
 
-PHP 5.3.16 | "php-cgi" -n | 8 threads
+PHP 7.3.3 | php -n | 8 threads
 .
 OK (1 tests, 0 skipped, 0.0 seconds)
 ```
 
 Nette Tester prints dot for successful test, F for failed test
 and S when the test has been skipped.
+
 
 Assertions
 ----------
@@ -87,37 +101,47 @@ This table shows all assertions (class `Assert` means `Tester\Assert`):
 - `Assert::contains($needle, string $haystack)` - Reports an error if $needle is not a substring of $haystack.
 - `Assert::notContains($needle, array $haystack)` - Reports an error if $needle is an element of $haystack.
 - `Assert::notContains($needle, string $haystack)` - Reports an error if $needle is a substring of $haystack.
-- `Assert::true($value)` - Reports an error if $value is not TRUE.
-- `Assert::false($value)` - Reports an error if $value is not FALSE.
+- `Assert::true($value)` - Reports an error if $value is not true.
+- `Assert::false($value)` - Reports an error if $value is not false.
 - `Assert::truthy($value)` - Reports an error if $value is not truthy.
 - `Assert::falsey($value)` - Reports an error if $value is not falsey.
-- `Assert::null($value)` - Reports an error if $value is not NULL.
+- `Assert::null($value)` - Reports an error if $value is not null.
 - `Assert::nan($value)` - Reports an error if $value is not NAN.
 - `Assert::type($type, $value)` -  Reports an error if the variable $value is not of PHP or class type $type.
-- `Assert::exception($closure, $class, $message = NULL, $code = NULL)` -  Checks if the function throws exception.
-- `Assert::error($closure, $level, $message = NULL)` -  Checks if the function $closure throws PHP warning/notice/error.
+- `Assert::exception($closure, $class, $message = null, $code = null)` -  Checks if the function throws exception.
+- `Assert::error($closure, $level, $message = null)` -  Checks if the function $closure throws PHP warning/notice/error.
 - `Assert::noError($closure)` -  Checks that the function $closure does not throw PHP warning/notice/error or exception.
 - `Assert::match($pattern, $value)` - Compares result using regular expression or mask.
 - `Assert::matchFile($file, $value)` - Compares result using regular expression or mask sorted in file.
 - `Assert::count($count, $value)` - Reports an error if number of items in $value is not $count.
+- `Assert::with($objectOrClass, $closure)` - Executes function that can access private and protected members of given object via $this.
 
 Testing exceptions:
 
 ```php
-Assert::exception(function() {
+Assert::exception(function () {
 	$h = new Greeting;
-	$h->say(NULL);
-}, 'InvalidArgumentException', 'Invalid name.');
+	$h->say(null);
+}, InvalidArgumentException::class, 'Invalid name.');
 ```
 
 Testing PHP errors, warnings or notices:
 
-
 ```php
-Assert::error(function() {
+Assert::error(function () {
 	$h = new Greeting;
 	echo $h->abc;
 }, E_NOTICE, 'Undefined property: Greeting::$abc');
+```
+
+Testing private access methods:
+
+```php
+$h = new Greeting;
+Assert::with($h, function () {
+	// normalize() is internal private method.
+	Assert::same('Hello David', $this->normalize('Hello david')); // $this is Greeting
+});
 ```
 
 Tips and features
@@ -138,8 +162,8 @@ tester -j 1
 ```
 
 How do you find code that is not yet tested? Use Code-Coverage Analysis. This feature
-requires you have installed [Xdebug](http://xdebug.org/) in `php.ini`. This will
-generate nice HTML report in `coverage.html`.
+requires you have installed [Xdebug](https://xdebug.org/) or [PCOV](https://github.com/krakjoe/pcov)
+extension, or you are using PHPDBG SAPI. This will generate nice HTML report in `coverage.html`.
 
 ```
 tester . -c php.ini --coverage coverage.html --coverage-src /my/source/codes
@@ -162,8 +186,8 @@ same as the CSS selectors:
 ```php
 $dom = Tester\DomQuery::fromHtml($html);
 
-Assert::true( $dom->has('input[name="username"]') );
-Assert::true( $dom->has('input[name="password"]') );
+Assert::true($dom->has('input[name="username"]'));
+Assert::true($dom->has('input[name="password"]'));
 ```
 
 For more inspiration see how [Nette Tester tests itself](https://github.com/nette/tester/tree/master/tests).
@@ -182,8 +206,9 @@ Usage:
     tester.php [options] [<test file> | <directory>]...
 
 Options:
-    -p <path>                    Specify PHP executable to run (default: php-cgi).
+    -p <path>                    Specify PHP interpreter to run (default: php).
     -c <path>                    Look for php.ini file (or look in directory) <path>.
+    -C                           Use system-wide php.ini.
     -l | --log <path>            Write log to file <path>.
     -d <key=value>...            Define INI entry 'key' with value 'val'.
     -s                           Show information about skipped tests.
@@ -193,6 +218,7 @@ Options:
     -w | --watch <path>          Watch directory.
     -i | --info                  Show tests environment info and exit.
     --setup <path>               Script for runner setup.
+    --temp <path>                Path to temporary directory. Default by sys_get_temp_dir().
     --colors [1|0]               Enable or disable colors.
     --coverage <path>            Generate code coverage report to file.
     --coverage-src <path>        Path to source code.

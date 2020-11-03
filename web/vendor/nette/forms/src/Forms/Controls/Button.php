@@ -5,6 +5,8 @@
  * Copyright (c) 2004 David Grudl (https://davidgrudl.com)
  */
 
+declare(strict_types=1);
+
 namespace Nette\Forms\Controls;
 
 use Nette;
@@ -15,52 +17,48 @@ use Nette;
  */
 class Button extends BaseControl
 {
-
 	/**
-	 * @param  string  caption
+	 * @param  string|object  $caption
 	 */
-	public function __construct($caption = NULL)
+	public function __construct($caption = null)
 	{
 		parent::__construct($caption);
 		$this->control->type = 'button';
+		$this->setOption('type', 'button');
 	}
 
 
 	/**
 	 * Is button pressed?
-	 * @return bool
 	 */
-	public function isFilled()
+	public function isFilled(): bool
 	{
 		$value = $this->getValue();
-		return $value !== NULL && $value !== array();
+		return $value !== null && $value !== [];
 	}
 
 
 	/**
 	 * Bypasses label generation.
-	 * @return void
 	 */
-	public function getLabel($caption = NULL)
+	public function getLabel($caption = null)
 	{
-		return NULL;
+		return null;
 	}
 
 
 	/**
 	 * Generates control's HTML element.
-	 * @param  string
-	 * @return Nette\Utils\Html
+	 * @param  string|object  $caption
 	 */
-	public function getControl($caption = NULL)
+	public function getControl($caption = null): Nette\Utils\Html
 	{
-		$this->setOption('rendered', TRUE);
+		$this->setOption('rendered', true);
 		$el = clone $this->control;
-		return $el->addAttributes(array(
+		return $el->addAttributes([
 			'name' => $this->getHtmlName(),
 			'disabled' => $this->isDisabled(),
-			'value' => $this->translate($caption === NULL ? $this->caption : $caption),
-		));
+			'value' => $this->translate($caption === null ? $this->getCaption() : $caption),
+		]);
 	}
-
 }

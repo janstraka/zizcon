@@ -1,5 +1,0 @@
-body {
-	background: url(image.gif);
-}
-
-@import 'subdir/file1.css';

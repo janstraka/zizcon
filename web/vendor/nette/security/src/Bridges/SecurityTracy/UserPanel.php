@@ -1,9 +1,11 @@
 <?php
 
 /**
- * This file is part of the Nette Framework (http://nette.org)
- * Copyright (c) 2004 David Grudl (http://davidgrudl.com)
+ * This file is part of the Nette Framework (https://nette.org)
+ * Copyright (c) 2004 David Grudl (https://davidgrudl.com)
  */
+
+declare(strict_types=1);
 
 namespace Nette\Bridges\SecurityTracy;
 
@@ -14,8 +16,10 @@ use Tracy;
 /**
  * User panel for Debugger Bar.
  */
-class UserPanel extends Nette\Object implements Tracy\IBarPanel
+class UserPanel implements Tracy\IBarPanel
 {
+	use Nette\SmartObject;
+
 	/** @var Nette\Security\User */
 	private $user;
 
@@ -28,31 +32,28 @@ class UserPanel extends Nette\Object implements Tracy\IBarPanel
 
 	/**
 	 * Renders tab.
-	 * @return string
 	 */
-	public function getTab()
+	public function getTab(): ?string
 	{
 		if (headers_sent() && !session_id()) {
-			return;
+			return null;
 		}
 
-		ob_start();
-		$user = $this->user;
-		require __DIR__ . '/templates/UserPanel.tab.phtml';
-		return ob_get_clean();
+		return Nette\Utils\Helpers::capture(function () {
+			$user = $this->user;
+			require __DIR__ . '/templates/UserPanel.tab.phtml';
+		});
 	}
 
 
 	/**
 	 * Renders panel.
-	 * @return string
 	 */
-	public function getPanel()
+	public function getPanel(): string
 	{
-		ob_start();
-		$user = $this->user;
-		require __DIR__ . '/templates/UserPanel.panel.phtml';
-		return ob_get_clean();
+		return Nette\Utils\Helpers::capture(function () {
+			$user = $this->user;
+			require __DIR__ . '/templates/UserPanel.panel.phtml';
+		});
 	}
-
 }
