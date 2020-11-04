@@ -30,17 +30,13 @@ class PostPresenter extends Nette\Application\UI\Presenter
     protected function createComponentCommentForm(): Form
     {
         $form = new Form; // means Nette\Application\UI\Form
-
         $form->addText('name', 'Jméno:')
             ->setRequired();
-
         $form->addEmail('email', 'E-mail:');
-
         $form->addTextArea('content', 'Komentář:')
             ->setRequired();
 
         $form->addSubmit('send', 'Publikovat komentář');
-
         $form->onSuccess[] = [$this, 'commentFormSucceeded'];
 
         return $form;
@@ -60,6 +56,45 @@ class PostPresenter extends Nette\Application\UI\Presenter
         $this->flashMessage('Děkuji za komentář', 'success');
         $this->redirect('this');
     }
+
+    protected function createComponentPostForm(): Form
+    {
+        $form = new Form;
+        $form->addText('title', 'Titulek:')
+            ->setRequired();
+        $form->addTextArea('content', 'Obsah:')
+            ->setRequired();
+
+        $form->addSubmit('send', 'Uložit a publikovat');
+        $form->onSuccess[] = [$this, 'postFormSucceeded'];
+
+        return $form;
+    }
+
+    public function postFormSucceeded(Form $form, array $values): void
+    {
+        $postId = $this->getParameter('postId');
+
+        if ($postId) {
+            $post = $this->database->table('posts')->get($postId);
+            $post->update($values);
+        } else {
+            $post = $this->database->table('posts')->insert($values);
+        }
+
+        $this->flashMessage('Příspěvek byl úspěšně publikován.', 'success');
+        $this->redirect('show', $post->id);
+    }
+
+    public function actionEdit(int $postId): void
+    {
+        $post = $this->database->table('posts')->get($postId);
+        if (!$post) {
+            $this->error('Příspěvek nebyl nalezen');
+        }
+        $this['postForm']->setDefaults($post->toArray());
+    }
+
 
 
 }
