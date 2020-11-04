@@ -19,6 +19,7 @@ di:
 
 services:
 	router: App\Router\RouterFactory::createRouter
+	ArticleManager: App\Model\ArticleManager
 
 
 security:
