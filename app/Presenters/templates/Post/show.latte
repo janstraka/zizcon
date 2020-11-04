@@ -7,7 +7,7 @@
 
 <div class="post">{$post->content}</div>
 
-<a n:href="edit $post->id">Upravit příspěvek</a>
+<a n:href="edit $post->id" n:if="$user->isLoggedIn()">Upravit příspěvek</a>
 
 <h2>Komentáře</h2>
 

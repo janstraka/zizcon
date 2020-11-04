@@ -73,6 +73,10 @@ class PostPresenter extends Nette\Application\UI\Presenter
 
     public function postFormSucceeded(Form $form, array $values): void
     {
+        if (!$this->getUser()->isLoggedIn()) {
+            $this->error('Pro vytvoření, nebo editování příspěvku se musíte přihlásit.');
+        }
+
         $postId = $this->getParameter('postId');
 
         if ($postId) {
@@ -88,11 +92,22 @@ class PostPresenter extends Nette\Application\UI\Presenter
 
     public function actionEdit(int $postId): void
     {
+        if (!$this->getUser()->isLoggedIn()) {
+            $this->redirect('Sign:in');
+        }
+
         $post = $this->database->table('posts')->get($postId);
         if (!$post) {
             $this->error('Příspěvek nebyl nalezen');
         }
         $this['postForm']->setDefaults($post->toArray());
+    }
+
+    public function actionCreate(): void
+    {
+        if (!$this->getUser()->isLoggedIn()) {
+            $this->redirect('Sign:in');
+        }
     }
 
 
