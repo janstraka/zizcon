@@ -6,7 +6,7 @@ use Nette;
 use Nette\Application\UI\Form;
 
 
-class SignPresenter extends Nette\Application\UI\Presenter
+class SignPresenter extends BasePresenter
 {
     protected function createComponentSignInForm(): Form
     {

@@ -6,7 +6,7 @@ use Nette;
 use App\Model\ArticleManager;
 
 
-class HomepagePresenter extends Nette\Application\UI\Presenter
+class HomepagePresenter extends BasePresenter
 {
     /** @var ArticleManager */
     private $articleManager;

@@ -6,7 +6,7 @@ use Nette;
 use Nette\Application\UI\Form;
 
 
-class PostPresenter extends Nette\Application\UI\Presenter
+class PostPresenter extends BasePresenter
 {
     /** @var Nette\Database\Context */
     private $database;
