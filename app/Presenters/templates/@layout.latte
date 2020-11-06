@@ -4,19 +4,18 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width">
 
-	<title>{ifset title}{include title|stripHtml} | {/ifset}Nette Web</title>
+	<title>{ifset title}{include title|stripHtml} | {/ifset}ŽižConTest</title>
 	<link rel="stylesheet" href="{$basePath}/css/style.css">
 </head>
 
 <body>
-	<ul class="navig">
-		<li><a n:href="Homepage:">Články</a></li>
-		{if $user->isLoggedIn()}
-			<li><a n:href="Sign:out">Odhlásit</a></li>
-		{else}
-			<li><a n:href="Sign:in">Přihlásit</a></li>
-		{/if}
+	<h1> ŽižCon </h1>
+	<h2> v roce 2021 </h2>
+
+	<ul class="menu" n:inner-foreach="$menuItems as $item => $link">
+		<li class="menu"><a class="menu" n:href="$link">{$item}</a></li>
 	</ul>
+	<hr>
 	<div n:foreach="$flashes as $flash" n:class="flash, $flash->type">{$flash->message}</div>
 
 	{include content}

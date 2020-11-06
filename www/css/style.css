@@ -1,9 +1,9 @@
 body {
 	font: 16px/1.5 Georgia, Verdana, Arial;
 	margin: 0 auto;
-	width: 600px;
+	width: 90%;
 	color: #333;
-	background-color: #fff;
+	background-color: #D5E8D4;
 }
 
 div.flash {
@@ -35,4 +35,33 @@ form .required label {
 form .error {
 	color: #D00;
 	font-weight: bold;
+}
+
+h1 {
+	color: red;
+	text-align: center;
+}
+
+h2 {
+	text-align: center;
+}
+
+ul.menu {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+  }
+  
+li.menu {
+	float: left;
+}
+
+li.menu a.menu {
+	display: block;
+	padding: 8px;
+	background-color: white;
+	color: black;
+	border-style: groove;
+	text-decoration: none;
 }

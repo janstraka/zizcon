@@ -1,18 +1,21 @@
 {block content}
-	<h1 n:block="title">Můj blog</h1>
+	<h1 n:block="title">Hlavní strana</h1>
 
-	{* {foreach $posts as $post} *}
-	{* <div class="post"> *}
-	<div n:foreach="$posts as $post" class="post">
-		<div class="date">publikovano: {$post->created_at|date:'F j, Y'}</div>
-
-		{* <h2><a href="{link Post:show $post->id}">{$post->title}</a></h2> *}
-		<h2><a n:href="Post:show $post->id">{$post->title}</a></h2>
-
-		<div>{$post->content}</div>
-		<hr>
+	<div id="fb-root"></div>
+	<script async defer crossorigin="anonymous" src="https://connect.facebook.net/cs_CZ/sdk.js#xfbml=1&version=v8.0" nonce="ue5rlzwq"></script>
+	<div style="width: 100%" align="center">
+		<div class="fb-page"
+			data-href="https://www.facebook.com/festivalzizcon" 
+			data-tabs="timeline, events, messages"
+			data-width="1000px" 
+			data-height="" 
+			data-small-header="false" 
+			data-adapt-container-width="true" 
+			data-hide-cover="false" 
+			data-show-facepile="true">
+			<blockquote cite="https://www.facebook.com/festivalzizcon" class="fb-xfbml-parse-ignore">
+				<a href="https://www.facebook.com/festivalzizcon">ŽižCon</a>
+			</blockquote>
+		</div>
 	</div>
-	{* {/foreach} *}
-
-	<a n:href="Post:create" n:if="$user->isLoggedIn()">Vytvořit příspěvek</a>
 {/block}
