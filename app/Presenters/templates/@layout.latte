@@ -7,18 +7,38 @@
 	<title>{ifset title}{include title|stripHtml} | {/ifset}ŽižConTest</title>
 	<link rel="stylesheet" href="{$basePath}/css/style.css">
 </head>
-
 <body>
-	<h1> ŽižCon </h1>
-	<h2> v roce 2021 </h2>
 
-	<ul class="menu" n:inner-foreach="$menuItems as $item => $link">
-		<li class="menu"><a class="menu" n:href="$link">{$item}</a></li>
-	</ul>
-	<hr>
 	<div n:foreach="$flashes as $flash" n:class="flash, $flash->type">{$flash->message}</div>
 
+	<div class="header">
+		<a class="zc_logo" href>
+			<img src="{$basePath}/pictures/logo.png" alt="ŽižCon">
+			<span class="claim">v nějakém určitém termínu v roce 2021... možná</span>
+		</a>
+		<div class="languages">
+			<img src="{$basePath}/pictures/languages/flag-square-250_czech.png" alt="langCzech">
+			<img src="{$basePath}/pictures/languages/flag-square-250_english.png" alt="langEnglish">
+			<img src="{$basePath}/pictures/languages/flag-square-250_chinese.png" alt="langChinese">
+		</div>
+		<div class="logging">
+			<ul n:inner-foreach="$logMenuItems as $item => $link">
+				<li><a n:href="$link">{$item}</a></li>
+			</ul>
+		</div>
+	</div>
+
+	<div class="menu">
+		<ul n:inner-foreach="$mainMenuItems as $item => $link">
+			<li><a n:href="$link">{$item}</a></li>
+		</ul>
+	</div>
+
 	{include content}
+
+	<div class="footer">
+
+	</div>
 
 	{block scripts}
 	<script src="https://nette.github.io/resources/js/3/netteForms.min.js"></script>
