@@ -37,7 +37,15 @@
 	{include content}
 
 	<div class="footer">
-
+		<div class="main-sponsors">
+			<ul n:inner-foreach="$sponsors as $sponsor">
+				<li><a href="{$sponsor->url}" target="_blank">
+					<img src="{$basePath}{$sponsor->image_path}" alt="{$sponsor->name}">
+				</a></li>
+			</ul>
+		</div>
+		<div class="minor-sponsors">
+		</div>
 	</div>
 
 	{block scripts}

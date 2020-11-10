@@ -108,6 +108,26 @@ h2 {
 	text-decoration: none;
 }
 
+/* FOOTER */
+.footer ul {
+	list-style-type: none;
+	margin-left: auto;
+	margin-right: auto;
+	padding: 0.3em;
+	overflow: hidden;
+	background-color: #16A085
+}
+
+.footer li a img {
+	float: left;
+	display: block;
+	margin-top: 0;
+	padding: 0.3em;
+	text-decoration: none;
+	width: 5%;
+	height: 5%;
+}
+
 /* FLASH */
 div.flash {
 	position: absolute;
@@ -137,7 +157,7 @@ div.flash {
 	margin: 0;
 	padding: 0.3em;
 	overflow: hidden;
-	background-color: darkgray
+	background-color: #16A085
 }
 
 .menu li a {

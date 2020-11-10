@@ -3,13 +3,23 @@
 namespace App\Presenters;
 
 use Nette\Application\UI\Presenter;
+use Nette\Database\Context;
+use App\Model\SponsorManager;
 
 abstract class BasePresenter extends Presenter
 {
 
+    /** @var SponsorManager */
+    private $sponsorManager;
+
+    public function __construct(SponsorManager $sponsorManager)
+    {
+        $this->sponsorManager = $sponsorManager;
+    }
+
     public function beforeRender()
     {
-        parent::beforeRender(); // nezapomeňte volat metodu předka, stejně jako u startup()
+        parent::beforeRender();
         $this->template->logMenuItems = [];
         $this->template->mainMenuItems = [
             'Hlavní strana' => 'Homepage:default',
@@ -26,7 +36,10 @@ abstract class BasePresenter extends Presenter
             $this->template->logMenuItems['Přihlásit'] = 'Sign:in';
             $this->template->logMenuItems['Registrovat'] = 'Sign:in';
         }
+    }
 
-        // $this->flashMessage('TEST.');
+    public function renderDefault(): void
+    {
+        $this->template->sponsors = $this->sponsorManager->getActiveSponsors();
     }
 }
