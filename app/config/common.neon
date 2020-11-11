@@ -21,6 +21,7 @@ services:
 	router: App\Router\RouterFactory::createRouter
 	ArticleManager: App\Model\ArticleManager
 	SponsorManager: App\Model\SponsorManager
+	GalleryManager: App\Model\GalleryManager
 
 
 security:
