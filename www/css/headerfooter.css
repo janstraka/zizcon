@@ -1,7 +1,6 @@
 /* HEADER */
 .header {
 	text-align: center;
-	height: 150px;
 }
 
 .header .zc_logo {
@@ -10,17 +9,18 @@
     max-width: 60%;
 }
 
-.header .claim {
+.header .zc_logo .claim {
     display: block;
     color: #2834d6;
     text-transform: uppercase;
     font-weight: bold;
     font-size: 1.2em;
-    opacity: 0.5;
+	opacity: 0.5;
+	padding: 5px;
 }
 
-.header img {
-	width: 20%;
+.header .zc_logo img { 
+	width: 60%;
 }
 
 .header .languages {
@@ -32,7 +32,7 @@
 }
 
 .header .languages img {
-	width: 10%;
+	width: 30px;
 }
 
 .header .logging {
@@ -59,6 +59,7 @@
 	background-color: yellow;
 	border: 0.3em outset green;
 	text-decoration: none;
+	border-radius: 5px;
 }
 
 /* FOOTER */

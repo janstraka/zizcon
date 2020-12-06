@@ -1,5 +1,5 @@
 body {
-	font: 16px/1.5 Georgia, Verdana, Arial;
+	font: 11px/1.5 Georgia, Verdana, Arial;
 	margin: 0 auto;
 	width: 90%;
 	color: #333;
@@ -85,4 +85,5 @@ div.flash {
 	background-color: white;
 	border: 0.3em outset green;
 	text-decoration: none;
+	border-radius: 5px;
 }
